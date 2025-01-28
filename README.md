@@ -5,17 +5,17 @@
 ## ディレクトリ構造
 
 src/
-├── controllers/ # HTTP リクエストの制御とレスポンスの整形
-├── services/ # ビジネスロジックの実装
-│ └── useCase/ # ユースケース単位でのビジネスロジック
-├── repositories/ # データアクセス層
-├── models/ # ドメインモデル
-├── schema/ # データスキーマ定義
-├── middleware/ # HTTP ミドルウェア
-├── routes/ # ルーティング定義
-├── infrastructure/ # インフラストラクチャ層（DB、外部 API 連携など）
-├── constants/ # 定数定義
-└── utils/ # ユーティリティ関数
+L controllers/ # HTTP リクエストの制御とレスポンスの整形
+L services/ # ビジネスロジックの実装
+L L useCase/ # ユースケース単位でのビジネスロジック
+L repositories/ # データアクセス層
+L models/ # ドメインモデル
+L schema/ # データスキーマ定義
+L middleware/ # HTTP ミドルウェア
+L routes/ # ルーティング定義
+L infrastructure/ # インフラストラクチャ層（DB、外部 API 連携など）
+L constants/ # 定数定義
+L utils/ # ユーティリティ関数
 
 ## レイヤー構成
 
