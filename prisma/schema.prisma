@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model places {
+  name        String?
+  description String?                  @db.VarChar
+  created_at  DateTime                 @default(now()) @db.Timestamptz(6)
+  location    Unsupported("geography")
+  id          String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id         BigInt   @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+}
