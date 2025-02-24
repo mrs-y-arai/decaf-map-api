@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsx src/main.ts",
     "dev": "nodemon --exec tsx src/main.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "format": "prettier -c \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\" && prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
     "prisma:reset": "npx prisma migrate reset"
@@ -21,11 +25,16 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.21.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.10",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
     "nodemon": "^3.1.9",
+    "prettier": "^3.5.2",
     "prisma": "^6.3.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
   }
 }
