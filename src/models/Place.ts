@@ -1,4 +1,10 @@
-import { z } from "zod";
-import { placeSchema } from "../schema/Place";
-
-export type Place = z.infer<typeof placeSchema>;
+export type Place = {
+  id: string;
+  name: string;
+  description?: string;
+  position: {
+    latitude: number;
+    longitude: number;
+  };
+  createdAt: Date;
+};
