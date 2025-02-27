@@ -1,5 +1,5 @@
 import express from 'express';
-import { PlaceRouter } from '~/routes/PlaceRoute';
+import { PlaceRouter } from '~/routes/PlaceRoute.js';
 
 const app = express();
 

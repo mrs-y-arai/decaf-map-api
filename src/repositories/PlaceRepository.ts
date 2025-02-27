@@ -2,10 +2,17 @@ import prisma from '~/infrastructure/database/prisma.js';
 import { placeListSchema } from '~/schema/Place.js';
 import { type Place } from '~/models/Place.js';
 import { placeConverter } from '~/converters/database/palceConverter.js';
+import { type PrismaClient } from '@prisma/client';
 
 export class PlaceRepository {
+  private prisma: PrismaClient;
+
+  constructor() {
+    this.prisma = prisma;
+  }
+
   public findById = async (id: string): Promise<Place> => {
-    const place = await prisma.$queryRaw`
+    const place = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
     FROM "places"
     WHERE id = ${id}::uuid`;
@@ -22,7 +29,7 @@ export class PlaceRepository {
     page: number;
     limit: number;
   }): Promise<Place[]> => {
-    const places = await prisma.$queryRaw`
+    const places = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
     FROM "places"
     LIMIT ${params.limit}
@@ -44,7 +51,7 @@ export class PlaceRepository {
       longitude: number;
     };
   }) => {
-    await prisma.$queryRaw`
+    await this.prisma.$queryRaw`
       INSERT INTO "places"
       (name, description, location)
       VALUES (${params.name},${params.description ?? null},
@@ -62,7 +69,7 @@ export class PlaceRepository {
     };
     distance: number;
   }) => {
-    const places = await prisma.$queryRaw`
+    const places = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
     FROM "places"
     WHERE ST_DWithin(
