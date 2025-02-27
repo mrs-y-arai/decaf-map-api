@@ -1,25 +1,13 @@
-import express, { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import { placeListSchema } from "./schema/Place";
-
-const prisma = new PrismaClient();
+import express from 'express';
+import { PlaceRouter } from '~/routes/PlaceRoute';
 
 const app = express();
+
+const API_BASE_URL = '/api/v1';
 const port = 3000;
 
-app.get("/", async (req: Request, res: Response) => {
-  const places = await prisma.$queryRaw`
-    SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
-    FROM "places"
-  `;
-  const parsedPlaces = placeListSchema.safeParse(places);
-  if (!parsedPlaces.success) {
-    console.error("Failed to parse places", parsedPlaces.error.format());
-    res.status(500).json({ error: "Failed to parse places" });
-    return;
-  }
-  res.json({ data: parsedPlaces.data });
-});
+app.use(express.json());
+app.use(`${API_BASE_URL}/places`, PlaceRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
