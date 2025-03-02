@@ -7,6 +7,8 @@ import {
   SearchPlacesRequest,
 } from '~/types/Request/Place.js';
 
+// TODO: Numberのキャストを真面目にzod parseする
+
 export class PlaceController {
   private placeRepository: PlaceRepository;
 

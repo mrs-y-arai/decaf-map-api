@@ -21,12 +21,16 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.3.0",
+    "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jwt-decode": "^4.0.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "^22.10.10",
     "eslint": "^9.21.0",
     "globals": "^16.0.0",
