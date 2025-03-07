@@ -1,7 +1,7 @@
-import { type PlaceSchema } from '~/schema/Place.js';
-import { type Place } from '~/models/Place.js';
+import { type ShopSchema } from '~/schema/Shop.js';
+import { type Shop } from '~/models/Shop.js';
 
-export function placeConverter(params: PlaceSchema): Place {
+export function shopConverter(params: ShopSchema): Shop {
   return {
     id: params.id,
     name: params.name,

@@ -1,46 +1,46 @@
 import prisma from '~/infrastructure/database/prisma.js';
-import { placeListSchema } from '~/schema/Place.js';
-import { type Place } from '~/models/Place.js';
-import { placeConverter } from '~/converters/database/placeConverter.js';
+import { shopListSchema } from '~/schema/Shop.js';
+import { type Shop } from '~/models/Shop.js';
+import { shopConverter } from '~/converters/database/shopConverter.js';
 import { type PrismaClient } from '@prisma/client';
 
-export class PlaceRepository {
+export class ShopRepository {
   public prisma: PrismaClient;
 
   constructor() {
     this.prisma = prisma;
   }
 
-  public findById = async (id: string): Promise<Place> => {
-    const place = await this.prisma.$queryRaw`
+  public findById = async (id: string): Promise<Shop> => {
+    const shop = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
-    FROM "places"
+    FROM "shops"
     WHERE id = ${id}::uuid`;
 
-    const parsedPlaces = placeListSchema.safeParse(place);
-    if (!parsedPlaces.success) {
-      throw new Error('Failed to parse place');
+    const parsedShops = shopListSchema.safeParse(shop);
+    if (!parsedShops.success) {
+      throw new Error('Failed to parse shop');
     }
 
-    return placeConverter(parsedPlaces.data[0]);
+    return shopConverter(parsedShops.data[0]);
   };
 
   public findMany = async (params: {
     page: number;
     limit: number;
-  }): Promise<Place[]> => {
-    const places = await this.prisma.$queryRaw`
+  }): Promise<Shop[]> => {
+    const shops = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
-    FROM "places"
+    FROM "shops"
     LIMIT ${params.limit}
     OFFSET ${(params.page - 1) * params.limit}`;
 
-    const parsedPlaces = placeListSchema.safeParse(places);
-    if (!parsedPlaces.success) {
-      throw new Error('Failed to parse places');
+    const parsedShops = shopListSchema.safeParse(shops);
+    if (!parsedShops.success) {
+      throw new Error('Failed to parse shops');
     }
 
-    return parsedPlaces.data.map((item) => placeConverter(item));
+    return parsedShops.data.map((item) => shopConverter(item));
   };
 
   public create = async (params: {
@@ -52,7 +52,7 @@ export class PlaceRepository {
     };
   }) => {
     await this.prisma.$queryRaw`
-      INSERT INTO "places"
+      INSERT INTO "shops"
       (name, description, location)
       VALUES (${params.name},${params.description ?? null},
       ST_Point(${params.position.longitude}, ${params.position.latitude}))`;
@@ -69,19 +69,19 @@ export class PlaceRepository {
     };
     distance: number;
   }) => {
-    const places = await this.prisma.$queryRaw`
+    const shops = await this.prisma.$queryRaw`
     SELECT id, name, description,ST_AsGeoJSON(location)::json as location, created_at
-    FROM "places"
+    FROM "shops"
     WHERE ST_DWithin(
       location::geography,
       ST_Point(${params.position.longitude}, ${params.position.latitude})::geography,
       ${params.distance})`;
 
-    const parsedPlaces = placeListSchema.safeParse(places);
-    if (!parsedPlaces.success) {
-      throw new Error('Failed to parse places');
+    const parsedShops = shopListSchema.safeParse(shops);
+    if (!parsedShops.success) {
+      throw new Error('Failed to parse shops');
     }
 
-    return parsedPlaces.data.map((item) => placeConverter(item));
+    return parsedShops.data.map((item) => shopConverter(item));
   };
 }
