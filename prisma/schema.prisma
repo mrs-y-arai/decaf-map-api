@@ -10,23 +10,12 @@ datasource db {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model places {
-  name        String?
-  description String?                  @db.VarChar
-  created_at  DateTime                 @default(now()) @db.Timestamptz(6)
-  location    Unsupported("geography")
-  id          String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model users {
-  name       String
-  created_at DateTime   @default(now()) @db.Timestamptz(6)
-  email      String
   id         String     @id @db.Uuid
-  users      auth_users @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  name       String?
+  email      String
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  users      auth_users @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_publicusers_authusers")
 
   @@schema("public")
 }
@@ -337,7 +326,6 @@ model auth_users {
   is_sso_user                 Boolean           @default(false)
   deleted_at                  DateTime?         @db.Timestamptz(6)
   is_anonymous                Boolean           @default(false)
-  tenant_id                   String?           @db.Uuid
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   one_time_tokens             one_time_tokens[]
@@ -348,6 +336,16 @@ model auth_users {
   @@index([is_anonymous])
   @@map("users")
   @@schema("auth")
+}
+
+model shops {
+  id          String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  description String?
+  created_at  DateTime                 @default(now()) @db.Timestamptz(6)
+  location    Unsupported("geography")
+
+  @@schema("public")
 }
 
 enum aal_level {

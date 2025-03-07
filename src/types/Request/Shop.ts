@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-export type GetPlacesRequest = Request<
+export type GetShopsRequest = Request<
   unknown,
   unknown,
   unknown,
@@ -10,7 +10,7 @@ export type GetPlacesRequest = Request<
   }
 >;
 
-export type GetPlaceRequest = Request<
+export type GetShopRequest = Request<
   {
     id: string;
   },
@@ -19,7 +19,7 @@ export type GetPlaceRequest = Request<
   unknown
 >;
 
-export type SearchPlacesRequest = Request<
+export type SearchShopsRequest = Request<
   unknown,
   unknown,
   unknown,
@@ -30,7 +30,7 @@ export type SearchPlacesRequest = Request<
   }
 >;
 
-export type PostPlaceRequest = Request<
+export type PostShopRequest = Request<
   unknown,
   unknown,
   {

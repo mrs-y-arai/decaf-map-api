@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { snakeToCamel } from '../utils/snakeToCamel.js';
 
-export const placeSchema = z
+export const shopSchema = z
   .object({
     id: z.string().uuid().min(1),
     name: z.string().min(1),
@@ -17,6 +17,6 @@ export const placeSchema = z
   })
   .transform(snakeToCamel);
 
-export type PlaceSchema = z.infer<typeof placeSchema>;
+export type ShopSchema = z.infer<typeof shopSchema>;
 
-export const placeListSchema = z.array(placeSchema);
+export const shopListSchema = z.array(shopSchema);

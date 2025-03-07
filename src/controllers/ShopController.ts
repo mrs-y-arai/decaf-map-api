@@ -1,44 +1,44 @@
-import { PlaceRepository } from '~/repositories/PlaceRepository.js';
+import { ShopRepository } from '~/repositories/ShopRepository.js';
 import { Response } from 'express';
 import {
-  GetPlacesRequest,
-  GetPlaceRequest,
-  PostPlaceRequest,
-  SearchPlacesRequest,
-} from '~/types/Request/Place.js';
+  GetShopsRequest,
+  GetShopRequest,
+  PostShopRequest,
+  SearchShopsRequest,
+} from '~/types/Request/Shop.js';
 
 // TODO: Numberのキャストを真面目にzod parseする
 
-export class PlaceController {
-  private placeRepository: PlaceRepository;
+export class ShopController {
+  private shopRepository: ShopRepository;
 
   constructor() {
-    this.placeRepository = new PlaceRepository();
+    this.shopRepository = new ShopRepository();
   }
 
-  public getPlaces = async (req: GetPlacesRequest, res: Response) => {
+  public getShops = async (req: GetShopsRequest, res: Response) => {
     try {
-      const places = await this.placeRepository.findMany({
+      const shops = await this.shopRepository.findMany({
         page: Number(req.query.page),
         limit: Number(req.query.limit),
       });
       res.status(200).json({
         body: {
-          places,
+          shops,
         },
         message: 'success',
       });
     } catch (err) {
-      res.status(400).json({ message: `カフェ一覧取得失敗 ${err}` });
+      res.status(400).json({ message: `店舗一覧取得失敗 ${err}` });
     }
   };
 
-  public getPlace = async (req: GetPlaceRequest, res: Response) => {
+  public getShop = async (req: GetShopRequest, res: Response) => {
     try {
-      const places = await this.placeRepository.findById(req.params.id);
+      const shops = await this.shopRepository.findById(req.params.id);
       res.status(200).json({
         body: {
-          places,
+          shops,
         },
         message: 'success',
       });
@@ -47,9 +47,9 @@ export class PlaceController {
     }
   };
 
-  public createPlace = async (req: PostPlaceRequest, res: Response) => {
+  public createShop = async (req: PostShopRequest, res: Response) => {
     try {
-      await this.placeRepository.create({
+      await this.shopRepository.create({
         name: req.body.name,
         description: req.body.description,
         position: {
@@ -65,12 +65,9 @@ export class PlaceController {
     }
   };
 
-  public searchNearByPoint = async (
-    req: SearchPlacesRequest,
-    res: Response,
-  ) => {
+  public searchNearByPoint = async (req: SearchShopsRequest, res: Response) => {
     try {
-      const places = await this.placeRepository.searchNearByPoint({
+      const shops = await this.shopRepository.searchNearByPoint({
         position: {
           latitude: Number(req.query.latitude),
           longitude: Number(req.query.longitude),
@@ -79,7 +76,7 @@ export class PlaceController {
       });
       res.status(200).json({
         body: {
-          places,
+          shops,
         },
         message: 'success',
       });

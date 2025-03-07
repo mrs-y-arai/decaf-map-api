@@ -1,5 +1,5 @@
 import express from 'express';
-import { PlaceRouter } from '~/routes/PlaceRoute';
+import { ShopRouter } from '~/routes/ShopRoute.js';
 import cors from 'cors';
 
 const app = express();
@@ -16,7 +16,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(`${API_BASE_URL}/places`, PlaceRouter);
+app.use(`${API_BASE_URL}/shops`, ShopRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
