@@ -1,21 +1,22 @@
--- Enable PostGIS extension (Add this manually)
+-- Enable PostGIS extension
 CREATE EXTENSION IF NOT EXISTS postgis;
 
 -- CreateTable
-CREATE TABLE "places" (
-    "name" TEXT,
-    "description" VARCHAR,
+CREATE TABLE "shops" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "name" TEXT NOT NULL,
+    "description" TEXT,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "location" geography NOT NULL,
-    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
 
-    CONSTRAINT "places_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "shops_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" BIGSERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "name" TEXT,
+    "email" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")

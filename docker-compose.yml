@@ -1,0 +1,23 @@
+services:
+  app:
+    build: ./
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+      - /app/node_modules # マウントしない
+      - /app/dist # マウントしない
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/database
+      - FRONTEND_BASE_URL=http://localhost:3000
+    depends_on:
+      - db
+
+  db:
+    image: postgis/postgis:15-3.3
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { jwtDecode } from 'jwt-decode';
-import { UserRepository } from '~/repositories/UserRepository';
+import { UserRepository } from '~/repositories/UserRepository.js';
 
 export async function authMiddleware(
   req: Request,
