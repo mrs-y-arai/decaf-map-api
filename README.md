@@ -50,3 +50,32 @@ L utils/ # ユーティリティ関数
 
 - データベース接続
 - 外部 API クライアント
+
+## テスト
+
+Docker 環境でテスト用のコンテナを起動してテストを実行します。
+
+### テスト用のコンテナを起動(まだなければコンテナ作成される)
+
+```bash
+make test-services-up
+```
+
+### テストデータベース マイグレーション
+
+```bash
+npm run test:db-migrate
+```
+
+### テストの実行
+
+```bash
+npm run test
+```
+
+### コンテナを作り直したい場合
+
+```bash
+make test-services-rebuild
+```
+
