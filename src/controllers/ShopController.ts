@@ -49,7 +49,7 @@ export class ShopController {
 
   public createShop = async (req: PostShopRequest, res: Response) => {
     try {
-      await this.shopRepository.create({
+      const shop = await this.shopRepository.create({
         name: req.body.name,
         description: req.body.description,
         position: {
@@ -58,6 +58,9 @@ export class ShopController {
         },
       });
       res.status(200).json({
+        body: {
+          id: shop.id,
+        },
         message: 'success',
       });
     } catch (err) {

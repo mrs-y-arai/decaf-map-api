@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import dotenv from 'dotenv';
 
 export default defineConfig({
   test: {
@@ -10,6 +11,7 @@ export default defineConfig({
       all: true,
       reportsDirectory: 'test-reports',
     },
+    env: dotenv.config({ path: '.env.test' }).parsed,
     alias: {
       '~': '/src',
     },

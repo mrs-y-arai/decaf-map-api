@@ -51,14 +51,16 @@ export class ShopRepository {
       longitude: number;
     };
   }) => {
-    await this.prisma.$queryRaw`
+    const shops: { id: string }[] = await this.prisma.$queryRaw`
       INSERT INTO "shops"
       (name, description, location)
       VALUES (${params.name},${params.description ?? null},
-      ST_Point(${params.position.longitude}, ${params.position.latitude}))`;
+      ST_Point(${params.position.longitude}, ${params.position.latitude}))
+      RETURNING id`;
 
     return {
       isSuccess: true,
+      id: shops[0].id,
     };
   };
 
@@ -83,5 +85,13 @@ export class ShopRepository {
     }
 
     return parsedShops.data.map((item) => shopConverter(item));
+  };
+
+  public delete = async (id: string) => {
+    await this.prisma.shops.delete({
+      where: {
+        id: id,
+      },
+    });
   };
 }

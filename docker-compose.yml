@@ -21,3 +21,8 @@ services:
       - POSTGRES_DB=database
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # DBデータの永続化
+
+volumes:
+  postgres_data: # 開発用DBのボリューム
