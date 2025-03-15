@@ -19,6 +19,7 @@ rebuild:
 
 test-services-up:
 	docker compose -f docker-compose-test.yml up -d
+	sleep 10
 
 test-services-down:
 	docker compose -f docker-compose-test.yml down
