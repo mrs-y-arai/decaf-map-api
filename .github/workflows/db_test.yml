@@ -1,0 +1,14 @@
+name: DB Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-ready:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Docker Conmpose Up
+        run: make test-services-up
