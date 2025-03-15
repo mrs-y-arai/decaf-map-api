@@ -16,7 +16,7 @@
     "prisma:reset": "npx prisma migrate reset",
     "prisma:seed": "tsx prisma/seed.ts",
     "test:db-migrate": "make test-services-db-migrate",
-    "test": "make test-services-up && docker compose exec app-test sh -c 'npx vitest'"
+    "test": "make test-services-up && docker compose exec app-test sh -c 'npx vitest run'"
   },
   "keywords": [],
   "author": "",
